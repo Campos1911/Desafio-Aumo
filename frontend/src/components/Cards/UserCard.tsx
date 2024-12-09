@@ -11,12 +11,12 @@ const UserCard = () => {
           {/*Section invisível usada para alinhamento*/}
           <section className="w-[33%]"></section>
           <section className="w-[33%] flex justify-center">
-            <button className="bg-blue-500 text-white p-2 rounded-sm w-[50%]">
+            <button className="bg-blue-500 text-white p-2 rounded-sm w-[50%] hover:bg-blue-800 hover:shadow-md duration-200">
               Follow
             </button>
           </section>
           <section className="w-[33%] flex justify-center">
-            <button className="border border-gray-400 p-2 rounded-sm w-[50%]">
+            <button className="border border-gray-400 p-2 rounded-sm w-[50%] hover:bg-gray-200 hover:shadow-md duration-200">
               Try the next one
             </button>
           </section>
