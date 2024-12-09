@@ -1,6 +1,11 @@
 import React from "react";
 
-const UserCard = () => {
+export interface UserCardProps {
+  username: string;
+  address: string;
+}
+
+const UserCard = ({ username, address }: UserCardProps) => {
   return (
     <div className="flex flex-col w-[80%] h-full items-center border">
       <div className="h-28 bg-green-500 w-full flex items-center justify-center">
@@ -22,8 +27,8 @@ const UserCard = () => {
           </section>
         </div>
         <div className="flex flex-col w-full items-center">
-          <p className="text-2xl">First + Last name</p>
-          <p className="font-bold">city, country</p>
+          <p className="text-2xl">{username}</p>
+          <p className="font-bold">{address}</p>
         </div>
       </div>
     </div>

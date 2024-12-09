@@ -7,7 +7,7 @@ export default function Home() {
         <p className="text-3xl">Find new users like you</p>
       </div>
       <div className="w-full flex flex-col gap-2 items-center justify-center absolute translate-y-[-70px]">
-        <UserCard />
+        <UserCard username="Anthoni Campos" address="Vila Velha, ES" />
         <div className="grid grid-cols-2 gap-2 w-[80%]">
           <InfosCard
             cardContent="Personal Info"
