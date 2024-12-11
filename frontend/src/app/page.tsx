@@ -46,7 +46,7 @@ export default function Home() {
           Find new users like you
         </p>
       </div>
-      <div className="w-full flex flex-col gap-2 items-center justify-center absolute translate-y-[-70px]">
+      <div className="w-full flex flex-col gap-2 items-center justify-center absolute translate-y-[-70px] xl:pb-0 md:pb-10">
         <UserCard
           username={`${randomUser?.name.first} ${randomUser?.name.last}`}
           address={`${randomUser?.location.city}, ${randomUser?.location.country}`}

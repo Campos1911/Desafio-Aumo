@@ -24,7 +24,7 @@ const UserCard = ({
           />
         </div>
       </div>
-      <div className="flex flex-col gap-5 h-40 bg-white w-full">
+      <div className="flex flex-col gap-5 xl:h-44 h-48 bg-white w-full">
         <div className="flex w-full justify-between mt-9">
           {/*Section invisível usada para alinhamento*/}
           <section className="w-[33%]"></section>
