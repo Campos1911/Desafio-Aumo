@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
+  const [following, setFollowing] = useState<boolean>(false);
   const [randomUser, setRandomUser] = useState<randomUserProps>();
 
   useEffect(() => {
@@ -23,6 +24,7 @@ export default function Home() {
   }, []);
 
   const tryNextHandler = async () => {
+    setLoading(true);
     await axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}`)
       .then((res) => {
@@ -30,7 +32,17 @@ export default function Home() {
         setLoading(false);
       })
       .catch((err) => console.log(err));
+    setLoading(false);
   };
+
+  useEffect(() => {
+    const followingTheUser = localStorage.getItem(
+      randomUser?.id.value as string
+    );
+    if (followingTheUser === null) {
+      setFollowing(false);
+    } else setFollowing(true);
+  }, [randomUser?.id]);
 
   if (loading) {
     return (
@@ -54,6 +66,9 @@ export default function Home() {
           username={`${randomUser?.name.first} ${randomUser?.name.last}`}
           address={`${randomUser?.location.city}, ${randomUser?.location.country}`}
           perfilImage={`${randomUser?.picture.large}`}
+          following={following}
+          setFollowing={setFollowing}
+          userEmail={`${randomUser?.email}`}
           tryNextHandler={tryNextHandler}
         />
         <div className="grid md:grid-cols-2 gap-2 w-[80%]">
