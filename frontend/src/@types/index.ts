@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface InfosCardProps {
   cardContent: string;
   bornAt?: string;
@@ -10,6 +12,9 @@ export interface UserCardProps {
   username: string;
   address: string;
   perfilImage?: string;
+  userEmail: string;
+  following: boolean;
+  setFollowing: Dispatch<SetStateAction<boolean>>;
   tryNextHandler: () => Promise<void>;
 }
 

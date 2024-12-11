@@ -6,8 +6,20 @@ const UserCard = ({
   username,
   address,
   perfilImage,
+  following,
+  setFollowing,
+  userEmail,
   tryNextHandler,
 }: UserCardProps) => {
+  const followHandler = () => {
+    if (following) {
+      localStorage.removeItem(userEmail);
+      setFollowing(false);
+    } else {
+      localStorage.setItem(userEmail, username);
+      setFollowing(true);
+    }
+  };
   return (
     <div className="flex flex-col w-[80%] h-full items-center border">
       <div
@@ -29,8 +41,13 @@ const UserCard = ({
           {/*Section invisível usada para alinhamento*/}
           <section className="w-[33%]"></section>
           <section className="md:w-[33%] w-full flex justify-center">
-            <button className="bg-blue-500 text-white p-2 rounded-sm w-[50%] hover:bg-blue-800 hover:shadow-md duration-200">
-              Follow
+            <button
+              onClick={followHandler}
+              className={`${
+                following === true ? "bg-gray-400" : "bg-blue-500"
+              } text-white p-2 rounded-sm w-[50%] hover:bg-blue-800 hover:shadow-md duration-200`}
+            >
+              {following ? "Unfollow" : "Follow"}
             </button>
           </section>
           <section className="md:w-[33%] w-full flex justify-center">
