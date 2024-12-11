@@ -42,7 +42,10 @@ export default function Home() {
   return (
     <div className="pt-16">
       <div className="flex text-white justify-center p-5 w-full bg-purple-800 h-36">
-        <p onClick={() => console.log(randomUser)} className="text-3xl">
+        <p
+          onClick={() => console.log(randomUser)}
+          className="md:text-3xl text-2xl"
+        >
           Find new users like you
         </p>
       </div>
