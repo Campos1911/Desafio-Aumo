@@ -24,16 +24,16 @@ const UserCard = ({
           />
         </div>
       </div>
-      <div className="flex flex-col gap-5 h-40 bg-white w-full">
-        <div className="flex w-full justify-between mt-9">
+      <div className="flex flex-col gap-5 xl:h-44 lg:h-48 h-60 bg-white w-full">
+        <div className="flex flex-col w-full justify-between mt-9 gap-2 md:flex-row">
           {/*Section invisível usada para alinhamento*/}
           <section className="w-[33%]"></section>
-          <section className="w-[33%] flex justify-center">
+          <section className="md:w-[33%] w-full flex justify-center">
             <button className="bg-blue-500 text-white p-2 rounded-sm w-[50%] hover:bg-blue-800 hover:shadow-md duration-200">
               Follow
             </button>
           </section>
-          <section className="w-[33%] flex justify-center">
+          <section className="md:w-[33%] w-full flex justify-center">
             <button
               onClick={tryNextHandler}
               className="border border-gray-400 p-2 rounded-sm w-[50%] hover:bg-gray-200 hover:shadow-md duration-200"
