@@ -34,13 +34,13 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="w-full h-screen flex items-center justify-center bg-purple-800">
+      <div className="w-full absolute z-50 h-screen flex items-center justify-center bg-purple-800">
         <div className="h-30 w-30 p-10 rounded-full border-2 border-white border-t-transparent animate-spin"></div>
       </div>
     );
   }
   return (
-    <div>
+    <div className="pt-16">
       <div className="flex text-white justify-center p-5 w-full bg-purple-800 h-36">
         <p onClick={() => console.log(randomUser)} className="text-3xl">
           Find new users like you
