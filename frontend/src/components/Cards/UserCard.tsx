@@ -2,7 +2,12 @@ import { UserCardProps } from "@/@types";
 import Image from "next/image";
 import React from "react";
 
-const UserCard = ({ username, address, perfilImage }: UserCardProps) => {
+const UserCard = ({
+  username,
+  address,
+  perfilImage,
+  tryNextHandler,
+}: UserCardProps) => {
   return (
     <div className="flex flex-col w-[80%] h-full items-center border">
       <div
@@ -29,7 +34,10 @@ const UserCard = ({ username, address, perfilImage }: UserCardProps) => {
             </button>
           </section>
           <section className="w-[33%] flex justify-center">
-            <button className="border border-gray-400 p-2 rounded-sm w-[50%] hover:bg-gray-200 hover:shadow-md duration-200">
+            <button
+              onClick={tryNextHandler}
+              className="border border-gray-400 p-2 rounded-sm w-[50%] hover:bg-gray-200 hover:shadow-md duration-200"
+            >
               Try the next one
             </button>
           </section>

@@ -21,6 +21,17 @@ export default function Home() {
     };
     getUser();
   }, []);
+
+  const tryNextHandler = async () => {
+    await axios
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}`)
+      .then((res) => {
+        setRandomUser(res.data.results[0]);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  };
+
   if (loading) {
     return (
       <div className="w-full h-screen flex items-center justify-center bg-purple-800">
@@ -40,6 +51,7 @@ export default function Home() {
           username={`${randomUser?.name.first} ${randomUser?.name.last}`}
           address={`${randomUser?.location.city}, ${randomUser?.location.country}`}
           perfilImage={`${randomUser?.picture.large}`}
+          tryNextHandler={tryNextHandler}
         />
         <div className="grid grid-cols-2 gap-2 w-[80%]">
           <InfosCard

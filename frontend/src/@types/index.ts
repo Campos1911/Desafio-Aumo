@@ -10,6 +10,7 @@ export interface UserCardProps {
   username: string;
   address: string;
   perfilImage?: string;
+  tryNextHandler: () => Promise<void>;
 }
 
 export interface randomUserProps {
