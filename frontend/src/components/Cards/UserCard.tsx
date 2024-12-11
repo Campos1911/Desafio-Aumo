@@ -1,10 +1,6 @@
+import { UserCardProps } from "@/@types";
 import Image from "next/image";
 import React from "react";
-
-export interface UserCardProps {
-  username: string;
-  address: string;
-}
 
 const UserCard = ({ username, address }: UserCardProps) => {
   return (

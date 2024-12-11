@@ -1,12 +1,5 @@
+import { InfosCardProps } from "@/@types";
 import React from "react";
-
-interface InfosCardProps {
-  cardContent: string;
-  bornAt?: string;
-  email?: string;
-  age?: string;
-  phone1?: string;
-}
 
 const InfosCard = ({
   cardContent,
