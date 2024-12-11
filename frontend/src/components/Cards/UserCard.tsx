@@ -2,14 +2,17 @@ import { UserCardProps } from "@/@types";
 import Image from "next/image";
 import React from "react";
 
-const UserCard = ({ username, address }: UserCardProps) => {
+const UserCard = ({ username, address, perfilImage }: UserCardProps) => {
   return (
     <div className="flex flex-col w-[80%] h-full items-center border">
-      <div className="h-28 bg-[url('/images/userIcon2.jpg')] bg-center bg-no-repeat bg-cover w-full flex items-center justify-center">
+      <div
+        style={{ backgroundImage: `url(${perfilImage})` }} //Passando inline CSS para usar o fundo dinâmico
+        className={`h-28 bg-center bg-no-repeat bg-cover w-full flex items-center justify-center`}
+      >
         <div className="w-32 h-32 flex justify-center items-center rounded-full bg-white border-2 absolute translate-y-4">
           <Image
             className="rounded-full"
-            src="/images/userIcon2.jpg"
+            src={`${perfilImage}`}
             alt="User default image"
             width={200}
             height={200}

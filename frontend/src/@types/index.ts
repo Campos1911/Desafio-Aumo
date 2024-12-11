@@ -9,6 +9,7 @@ export interface InfosCardProps {
 export interface UserCardProps {
   username: string;
   address: string;
+  perfilImage?: string;
 }
 
 export interface randomUserProps {
@@ -27,7 +28,7 @@ export interface randomUserProps {
   login: { uuid: string; username: string; password: string };
   nat: string;
   phone: string;
-  picture: { large: string; medium: string; small: string };
+  picture: { large: string; medium: string; thumbnail: string };
   registered: { date: string; age: number };
   name: { title: string; first: string; last: string };
 }
