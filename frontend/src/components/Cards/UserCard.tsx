@@ -1,4 +1,5 @@
 import { UserCardProps } from "@/@types";
+import { useStateContext } from "@/context/StateContext";
 import Image from "next/image";
 import React from "react";
 
@@ -11,16 +12,19 @@ const UserCard = ({
   userEmail,
   tryNextHandler,
 }: UserCardProps) => {
+  const { state, setState } = useStateContext();
   const followHandler = () => {
     if (following) {
       localStorage.removeItem(userEmail);
       setFollowing(false);
+      setState({ triggerFollow: !state.triggerFollow });
     } else {
       localStorage.setItem(
         userEmail,
         JSON.stringify({ username, perfilImage })
       );
       setFollowing(true);
+      setState({ triggerFollow: !state.triggerFollow });
     }
   };
   return (

@@ -2,12 +2,14 @@
 
 import { randomUserProps } from "@/@types";
 import { InfosCard, UserCard } from "@/components/Cards";
+import { useStateContext } from "@/context/StateContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
   const [following, setFollowing] = useState<boolean>(false);
+  const { state } = useStateContext();
   const [randomUser, setRandomUser] = useState<randomUserProps>();
 
   useEffect(() => {
@@ -55,7 +57,7 @@ export default function Home() {
     <div className="pt-16">
       <div className="flex text-white justify-center p-5 w-full bg-purple-800 h-36">
         <p
-          onClick={() => console.log(randomUser)}
+          onClick={() => alert(state.triggerFollow)}
           className="md:text-3xl text-2xl"
         >
           Find new users like you

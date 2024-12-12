@@ -9,11 +9,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DropdownCard } from "../Cards";
 import { ItemStorage } from "@/@types";
+import { useStateContext } from "@/context/StateContext";
 
 const DropdownFollowers = () => {
   const [followingEmails, setFollowingEmails] = useState<
     { chave: string; dados: ItemStorage }[]
   >([]);
+
+  const { state } = useStateContext();
 
   useEffect(() => {
     const padrao = /.*@.*\.com/; // Padrão utilizado para achar as chaves do tipo 'email'
@@ -34,7 +37,8 @@ const DropdownFollowers = () => {
     }
     setFollowingEmails(itensEncontrados);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [state]);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none mr-10">

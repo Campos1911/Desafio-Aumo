@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import { Header } from "@/components/Layout";
+import { StateProvider } from "@/context/StateContext";
 
 const poppins = Poppins({
   subsets: ["latin", "latin-ext"],
@@ -20,11 +21,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body className={`${poppins.className}`}>
-        <Header />
-        {children}
-      </body>
-    </html>
+    <StateProvider>
+      <html lang="pt-BR">
+        <body className={`${poppins.className}`}>
+          <Header />
+          {children}
+        </body>
+      </html>
+    </StateProvider>
   );
 }
