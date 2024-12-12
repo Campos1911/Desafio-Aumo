@@ -1,7 +1,7 @@
 "use client";
 
 import { randomUserProps } from "@/@types";
-import { InfosCard, UserCard } from "@/components/Cards";
+import { InfosCard, SuggestionsCard, UserCard } from "@/components/Cards";
 import { Loading } from "@/components/Layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -74,6 +74,16 @@ export default function Home() {
             email={`${randomUser?.email}`}
             phone1={`${randomUser?.phone}`}
           />
+        </div>
+        <div className="w-[80%] flex flex-col gap-3 py-4">
+          <p className="text-2xl">Sugestions 4 you:</p>
+          <div className="grid grid-cols-5 w-full gap-2">
+            <SuggestionsCard />
+            <SuggestionsCard />
+            <SuggestionsCard />
+            <SuggestionsCard />
+            <SuggestionsCard />
+          </div>
         </div>
       </div>
     </div>
