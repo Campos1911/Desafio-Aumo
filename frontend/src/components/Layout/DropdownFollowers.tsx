@@ -16,11 +16,10 @@ const DropdownFollowers = () => {
   >([]);
 
   useEffect(() => {
-    const padrao = /.*@.*\.com/; // Pode ser ajustado para corresponder exatamente ao seu padrão
+    const padrao = /.*@.*\.com/; // Padrão utilizado para achar as chaves do tipo 'email'
     const itensEncontrados: { chave: string; dados: ItemStorage }[] = [];
     for (let i = 0; i <= localStorage.length; i++) {
       const chave = localStorage.key(i);
-      console.log(chave);
       if (chave && padrao.test(chave)) {
         const valor: string | null = localStorage.getItem(chave);
         if (valor) {
@@ -39,16 +38,21 @@ const DropdownFollowers = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none mr-10">
-        Open
+        {`Following ${followingEmails.length} users`}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-96">
-        <DropdownMenuItem onClick={() => console.log(followingEmails)}>
-          <DropdownCard
-            userImage=""
-            username="Teste 123"
-            userEmail="tilje.liseth@example.com"
-          />
-        </DropdownMenuItem>
+        {followingEmails.map((user, index) => (
+          <DropdownMenuItem
+            key={index}
+            onClick={() => console.log(followingEmails)}
+          >
+            <DropdownCard
+              userImage={user.dados.perfilImage}
+              username={user.dados.username}
+              userEmail={user.chave}
+            />
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
