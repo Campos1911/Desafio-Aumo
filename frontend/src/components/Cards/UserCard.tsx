@@ -54,7 +54,7 @@ const UserCard = ({
                 following === true ? "bg-gray-400" : "bg-blue-500"
               } text-white p-2 rounded-sm w-[50%] hover:bg-blue-800 hover:shadow-md duration-200`}
             >
-              {following ? "Unfollow" : "Follow"}
+              {following ? "Following" : "Follow"}
             </button>
           </section>
           <section className="md:w-[33%] w-full flex justify-center">
