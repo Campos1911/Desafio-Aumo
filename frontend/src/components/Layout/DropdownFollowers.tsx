@@ -10,12 +10,12 @@ import {
 import { DropdownCard } from "../Cards";
 import { ItemStorage } from "@/@types";
 import { useStateContext } from "@/context/StateContext";
+import { FaChevronDown } from "react-icons/fa";
 
 const DropdownFollowers = () => {
   const [followingEmails, setFollowingEmails] = useState<
     { chave: string; dados: ItemStorage }[]
   >([]);
-
   const { state } = useStateContext();
 
   useEffect(() => {
@@ -41,8 +41,8 @@ const DropdownFollowers = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="outline-none mr-10">
-        {`Following ${followingEmails.length} users`}
+      <DropdownMenuTrigger className="outline-none mr-10 flex items-center gap-3">
+        {`Following ${followingEmails.length} users`} <FaChevronDown />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-96">
         {followingEmails.map((user, index) => (
