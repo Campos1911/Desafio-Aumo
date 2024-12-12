@@ -16,7 +16,10 @@ const UserCard = ({
       localStorage.removeItem(userEmail);
       setFollowing(false);
     } else {
-      localStorage.setItem(userEmail, username);
+      localStorage.setItem(
+        userEmail,
+        JSON.stringify({ username, perfilImage })
+      );
       setFollowing(true);
     }
   };

@@ -38,3 +38,8 @@ export interface randomUserProps {
   registered: { date: string; age: number };
   name: { title: string; first: string; last: string };
 }
+
+export interface ItemStorage {
+  username: string;
+  perfilImage: string;
+}
