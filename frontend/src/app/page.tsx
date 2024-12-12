@@ -2,6 +2,7 @@
 
 import { randomUserProps } from "@/@types";
 import { InfosCard, UserCard } from "@/components/Cards";
+import { Loading } from "@/components/Layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -45,21 +46,12 @@ export default function Home() {
   }, [randomUser?.id]);
 
   if (loading) {
-    return (
-      <div className="w-full absolute z-50 h-screen flex items-center justify-center bg-purple-800">
-        <div className="h-30 w-30 p-10 rounded-full border-2 border-white border-t-transparent animate-spin"></div>
-      </div>
-    );
+    return <Loading />;
   }
   return (
     <div className="pt-16">
       <div className="flex text-white justify-center p-5 w-full bg-purple-800 h-36">
-        <p
-          onClick={() => console.log(randomUser)}
-          className="md:text-3xl text-2xl"
-        >
-          Find new users like you
-        </p>
+        <p className="md:text-3xl text-2xl">Find new users like you</p>
       </div>
       <div className="w-full flex flex-col gap-2 items-center justify-center absolute translate-y-[-70px] xl:pb-0 pb-10">
         <UserCard

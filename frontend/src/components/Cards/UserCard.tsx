@@ -1,4 +1,5 @@
 import { UserCardProps } from "@/@types";
+import { useStateContext } from "@/context/StateContext";
 import Image from "next/image";
 import React from "react";
 
@@ -11,13 +12,19 @@ const UserCard = ({
   userEmail,
   tryNextHandler,
 }: UserCardProps) => {
+  const { state, setState } = useStateContext();
   const followHandler = () => {
     if (following) {
       localStorage.removeItem(userEmail);
       setFollowing(false);
+      setState({ triggerFollow: !state.triggerFollow });
     } else {
-      localStorage.setItem(userEmail, username);
+      localStorage.setItem(
+        userEmail,
+        JSON.stringify({ username, perfilImage })
+      );
       setFollowing(true);
+      setState({ triggerFollow: !state.triggerFollow });
     }
   };
   return (
@@ -47,7 +54,7 @@ const UserCard = ({
                 following === true ? "bg-gray-400" : "bg-blue-500"
               } text-white p-2 rounded-sm w-[50%] hover:bg-blue-800 hover:shadow-md duration-200`}
             >
-              {following ? "Unfollow" : "Follow"}
+              {following ? "Following" : "Follow"}
             </button>
           </section>
           <section className="md:w-[33%] w-full flex justify-center">
