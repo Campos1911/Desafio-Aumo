@@ -3,10 +3,9 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { DropdownCard } from "../Cards";
 
 const DropdownFollowers = () => {
   return (
@@ -14,13 +13,14 @@ const DropdownFollowers = () => {
       <DropdownMenuTrigger className="outline-none mr-10">
         Open
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
-        <DropdownMenuItem>Subscription</DropdownMenuItem>
+      <DropdownMenuContent className="w-96">
+        <DropdownMenuItem>
+          <DropdownCard
+            userImage=""
+            username="Teste 123"
+            userEmail="tilje.liseth@example.com"
+          />
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
