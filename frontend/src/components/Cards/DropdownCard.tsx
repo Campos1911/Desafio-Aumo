@@ -1,5 +1,6 @@
 "use client";
 
+import { useStateContext } from "@/context/StateContext";
 import Image from "next/image";
 
 const DropdownCard = ({
@@ -11,8 +12,10 @@ const DropdownCard = ({
   username: string;
   userEmail: string;
 }) => {
+  const { state, setState } = useStateContext();
   const handleUnfollow = (email: string) => {
     localStorage.removeItem(email);
+    setState({ triggerFollow: !state.triggerFollow });
   };
   return (
     <div className="w-full flex gap-3 items-center">
