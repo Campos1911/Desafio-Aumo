@@ -107,8 +107,18 @@ export default function Home() {
         </div>
         <div className="w-[80%] flex flex-col gap-3 py-4">
           <p className="text-2xl">Sugestions 4 you:</p>
-          <div className="grid grid-cols-5 w-full gap-2 grid-rows-1 overflow-hidden">
+          <div className="grid-cols-5 w-full gap-2 grid-rows-1 overflow-hidden hidden md:grid">
             {sugestions.slice(0, 5).map((sugestion, index) => (
+              <SuggestionsCard
+                key={index}
+                sugestion={sugestion}
+                sugestionsSaved={sugestions}
+                setSugestions={setSugestions}
+              />
+            ))}
+          </div>
+          <div className="grid-cols-2 w-full gap-2 grid-rows-1 overflow-hidden grid md:hidden">
+            {sugestions.slice(0, 2).map((sugestion, index) => (
               <SuggestionsCard
                 key={index}
                 sugestion={sugestion}
