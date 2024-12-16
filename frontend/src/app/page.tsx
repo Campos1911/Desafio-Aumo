@@ -4,12 +4,15 @@ import { randomUserProps } from "@/@types";
 import { InfosCard, SuggestionsCard, UserCard } from "@/components/Cards";
 import { Loading } from "@/components/Layout";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
+  const [visible, setVisible] = useState<boolean>(false);
   const [following, setFollowing] = useState<boolean>(false);
   const [randomUser, setRandomUser] = useState<randomUserProps>();
+  const router = useRouter();
   const [sugestions, setSugestions] = useState<randomUserProps[]>([]);
 
   useEffect(() => {
@@ -29,6 +32,20 @@ export default function Home() {
     getUser();
   }, []);
 
+  useEffect(() => {
+    const userLogged = localStorage.getItem("userInfo");
+    if (userLogged === null) {
+      router.push("/login");
+    }
+    try {
+      const parsedData: randomUserProps = JSON.parse(userLogged as string);
+      setRandomUser(parsedData);
+      setLoading(false);
+    } catch (error) {
+      console.error("Erro ao analisar os dados do localStorage:", error);
+    }
+  }, [router]);
+
   const tryNextHandler = async () => {
     setLoading(true);
     if (!following) {
@@ -39,6 +56,7 @@ export default function Home() {
       .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}`)
       .then((res) => {
         setRandomUser(res.data.results[0]);
+        setVisible(true);
         setLoading(false);
       })
       .catch((err) => console.log(err));
@@ -66,11 +84,14 @@ export default function Home() {
         <UserCard
           username={`${randomUser?.name.first} ${randomUser?.name.last}`}
           address={`${randomUser?.location.city}, ${randomUser?.location.country}`}
-          perfilImage={`${randomUser?.picture.large}`}
+          perfilImage={`${
+            randomUser?.picture.large || "/images/userIcon2.jpg"
+          }`}
           following={following}
           setFollowing={setFollowing}
           userEmail={`${randomUser?.email}`}
           tryNextHandler={tryNextHandler}
+          visible={visible}
         />
         <div className="grid md:grid-cols-2 gap-2 w-[80%]">
           <InfosCard

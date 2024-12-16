@@ -14,6 +14,7 @@ export interface UserCardProps {
   perfilImage?: string;
   userEmail: string;
   following: boolean;
+  visible: boolean;
   setFollowing: Dispatch<SetStateAction<boolean>>;
   tryNextHandler: () => Promise<void>;
 }
