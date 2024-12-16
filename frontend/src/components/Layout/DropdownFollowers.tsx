@@ -41,7 +41,7 @@ const DropdownFollowers = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="outline-none mr-10 flex items-center gap-3">
+      <DropdownMenuTrigger className="outline-none md:mr-10 flex items-center gap-3">
         {`Following ${followingEmails.length} users`} <FaChevronDown />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-96">
