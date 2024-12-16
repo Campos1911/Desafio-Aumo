@@ -28,7 +28,7 @@ export default function Home() {
   const tryNextHandler = async () => {
     setLoading(true);
     if (!following) {
-      setSugestions([...sugestions, randomUser as randomUserProps]);
+      setSugestions([randomUser as randomUserProps, ...sugestions]);
     }
     await axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}`)
@@ -56,7 +56,6 @@ export default function Home() {
     <div className="pt-16">
       <div className="flex text-white justify-center p-5 w-full bg-purple-800 h-36">
         <p className="md:text-3xl text-2xl">Find new users like you</p>
-        <button onClick={() => console.log(sugestions)}>teste</button>
       </div>
       <div className="w-full flex flex-col gap-2 items-center justify-center absolute translate-y-[-70px] xl:pb-0 pb-10">
         <UserCard
@@ -82,12 +81,14 @@ export default function Home() {
         </div>
         <div className="w-[80%] flex flex-col gap-3 py-4">
           <p className="text-2xl">Sugestions 4 you:</p>
-          <div className="grid grid-cols-5 w-full gap-2">
-            <SuggestionsCard />
-            <SuggestionsCard />
-            <SuggestionsCard />
-            <SuggestionsCard />
-            <SuggestionsCard />
+          <div className="grid grid-cols-5 w-full gap-2 grid-rows-1 overflow-hidden">
+            {sugestions.slice(0, 5).map((sugestion, index) => (
+              <SuggestionsCard
+                key={index}
+                sugestion={sugestion}
+                setSugestions={setSugestions}
+              />
+            ))}
           </div>
         </div>
       </div>
