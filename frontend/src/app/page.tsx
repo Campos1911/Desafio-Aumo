@@ -1,101 +1,124 @@
-import Image from "next/image";
+"use client";
+
+import { randomUserProps } from "@/@types";
+import { InfosCard, SuggestionsCard, UserCard } from "@/components/Cards";
+import { Loading } from "@/components/Layout";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [loading, setLoading] = useState<boolean>(true);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [following, setFollowing] = useState<boolean>(false);
+  const [randomUser, setRandomUser] = useState<randomUserProps>();
+  const router = useRouter();
+  const [sugestions, setSugestions] = useState<randomUserProps[]>([]);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  useEffect(() => {
+    const sugestions = localStorage.getItem("sugestions");
+    if (sugestions) {
+      setSugestions(JSON.parse(localStorage.getItem("sugestions") as string));
+    }
+    const getUser = async () => {
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}`)
+        .then((res) => {
+          setRandomUser(res.data.results[0]);
+          setLoading(false);
+        })
+        .catch((err) => console.log(err));
+    };
+    getUser();
+  }, []);
+
+  useEffect(() => {
+    const userLogged = localStorage.getItem("userInfo");
+    if (userLogged === null) {
+      router.push("/login");
+    }
+    try {
+      const parsedData: randomUserProps = JSON.parse(userLogged as string);
+      setRandomUser(parsedData);
+      setLoading(false);
+    } catch (error) {
+      console.error("Erro ao analisar os dados do localStorage:", error);
+    }
+  }, [router]);
+
+  const tryNextHandler = async () => {
+    setLoading(true);
+    if (!following) {
+      setSugestions([randomUser as randomUserProps, ...sugestions]);
+      localStorage.setItem("sugestions", JSON.stringify(sugestions));
+    }
+    await axios
+      .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}`)
+      .then((res) => {
+        setRandomUser(res.data.results[0]);
+        setVisible(true);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    const followingTheUser = localStorage.getItem(
+      randomUser?.id.value as string
+    );
+    if (followingTheUser === null) {
+      setFollowing(false);
+    } else setFollowing(true);
+  }, [randomUser?.id]);
+
+  if (loading) {
+    return <Loading />;
+  }
+  return (
+    <div className="pt-16">
+      <div className="flex text-white justify-center p-5 w-full bg-purple-800 h-36">
+        <p className="md:text-3xl text-2xl">Find new users like you</p>
+      </div>
+      <div className="w-full flex flex-col gap-2 items-center justify-center absolute translate-y-[-70px] xl:pb-0 pb-10">
+        <UserCard
+          username={`${randomUser?.name.first} ${randomUser?.name.last}`}
+          address={`${randomUser?.location.city}, ${randomUser?.location.country}`}
+          perfilImage={`${
+            randomUser?.picture.large || "/images/userIcon2.jpg"
+          }`}
+          following={following}
+          setFollowing={setFollowing}
+          userEmail={`${randomUser?.email}`}
+          tryNextHandler={tryNextHandler}
+          visible={visible}
+        />
+        <div className="grid md:grid-cols-2 gap-2 w-[80%]">
+          <InfosCard
+            cardContent="Personal Info"
+            bornAt={`${randomUser?.nat}`}
+            age={`${randomUser?.registered.age} years`}
+          />
+          <InfosCard
+            cardContent="Contact Info"
+            email={`${randomUser?.email}`}
+            phone1={`${randomUser?.phone}`}
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="w-[80%] flex flex-col gap-3 py-4">
+          <p className="text-2xl">Sugestions 4 you:</p>
+          <div className="grid grid-cols-5 w-full gap-2 grid-rows-1 overflow-hidden">
+            {sugestions.slice(0, 5).map((sugestion, index) => (
+              <SuggestionsCard
+                key={index}
+                sugestion={sugestion}
+                sugestionsSaved={sugestions}
+                setSugestions={setSugestions}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
