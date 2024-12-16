@@ -5,9 +5,11 @@ import React, { Dispatch, SetStateAction } from "react";
 
 const SuggestionsCard = ({
   sugestion,
+  sugestionsSaved,
   setSugestions,
 }: {
   sugestion: randomUserProps;
+  sugestionsSaved: randomUserProps[];
   setSugestions: Dispatch<SetStateAction<randomUserProps[]>>;
 }) => {
   const { state, setState } = useStateContext();
@@ -18,10 +20,12 @@ const SuggestionsCard = ({
       sugestion.email,
       JSON.stringify({ username, perfilImage })
     );
-    setState({ triggerFollow: !state.triggerFollow });
     setSugestions((prevItens) =>
       prevItens.filter((item) => item.email !== sugestion.email)
     );
+    localStorage.removeItem("sugestions");
+    localStorage.setItem("sugestions", JSON.stringify(sugestionsSaved));
+    setState({ triggerFollow: !state.triggerFollow });
   };
   return (
     <div className="flex flex-col gap-3 items-center justify-center w-full p-3 rounded-md border shadow-lg">

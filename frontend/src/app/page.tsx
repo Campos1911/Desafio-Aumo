@@ -13,6 +13,10 @@ export default function Home() {
   const [sugestions, setSugestions] = useState<randomUserProps[]>([]);
 
   useEffect(() => {
+    const sugestions = localStorage.getItem("sugestions");
+    if (sugestions) {
+      setSugestions(JSON.parse(localStorage.getItem("sugestions") as string));
+    }
     const getUser = async () => {
       await axios
         .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}`)
@@ -29,6 +33,7 @@ export default function Home() {
     setLoading(true);
     if (!following) {
       setSugestions([randomUser as randomUserProps, ...sugestions]);
+      localStorage.setItem("sugestions", JSON.stringify(sugestions));
     }
     await axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}`)
@@ -86,6 +91,7 @@ export default function Home() {
               <SuggestionsCard
                 key={index}
                 sugestion={sugestion}
+                sugestionsSaved={sugestions}
                 setSugestions={setSugestions}
               />
             ))}
