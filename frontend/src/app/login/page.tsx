@@ -38,11 +38,11 @@ const SuasInfos = () => {
     }
   };
   return (
-    <div className="bg-purple-800 h-screen flex items-center justify-center">
-      <form className="flex flex-col items-center justify-center w-[40%] bg-white p-5 rounded-lg gap-3 shadow-md">
+    <div className="bg-purple-800 h-screen flex items-center justify-center px-3">
+      <form className="flex flex-col items-center justify-center lg:w-[40%] bg-white p-5 rounded-lg gap-3 shadow-md">
         <p className="text-3xl text-purple-600">Users_like.me</p>
         <section className="w-full">
-          <p>Seu nome</p>
+          <p className="text-sm md:text-base">Seu nome</p>
           <input
             onChange={(e) =>
               setUserInfo({
@@ -60,7 +60,7 @@ const SuasInfos = () => {
         </section>
         <section className="w-full flex gap-2">
           <section className="w-[50%]">
-            <p>Sua idade</p>
+            <p className="text-sm md:text-base">Sua idade</p>
             <input
               type="number"
               onChange={(e) =>
@@ -76,7 +76,7 @@ const SuasInfos = () => {
             />
           </section>
           <section className="w-[50%]">
-            <p>País que nasceu:</p>
+            <p className="text-sm md:text-base">País que nasceu:</p>
             <input
               onChange={(e) =>
                 setUserInfo({
@@ -101,7 +101,7 @@ const SuasInfos = () => {
         </section>
         <section className="w-full flex gap-2">
           <section className="w-[50%]">
-            <p>Seu email:</p>
+            <p className="text-sm md:text-base">Seu email:</p>
             <input
               onChange={(e) =>
                 setUserInfo({ ...userInfo, email: e.target.value })
@@ -111,7 +111,7 @@ const SuasInfos = () => {
             />
           </section>
           <section className="w-[50%]">
-            <p>Seu telefone:</p>
+            <p className="text-sm md:text-base">Seu telefone:</p>
             <input
               onChange={(e) =>
                 setUserInfo({ ...userInfo, phone: e.target.value })
@@ -123,7 +123,7 @@ const SuasInfos = () => {
         </section>
         <section className="w-full flex gap-2">
           <section className="w-full">
-            <p>Cidade que reside:</p>
+            <p className="text-sm md:text-base">Cidade que reside:</p>
             <input
               onChange={(e) =>
                 setUserInfo({

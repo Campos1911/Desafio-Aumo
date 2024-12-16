@@ -36,7 +36,7 @@ const SuggestionsCard = ({
         width={60}
         height={60}
       />
-      <p>
+      <p className="text-center">
         {sugestion.name.first} {sugestion.name.last}
       </p>
       <p className="text-sm">{sugestion.location.country}</p>
