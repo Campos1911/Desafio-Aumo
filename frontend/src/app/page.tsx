@@ -1,7 +1,7 @@
 "use client";
 
 import { randomUserProps } from "@/@types";
-import { InfosCard, UserCard } from "@/components/Cards";
+import { InfosCard, SuggestionsCard, UserCard } from "@/components/Cards";
 import { Loading } from "@/components/Layout";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,24 @@ export default function Home() {
   const [following, setFollowing] = useState<boolean>(false);
   const [randomUser, setRandomUser] = useState<randomUserProps>();
   const router = useRouter();
+  const [sugestions, setSugestions] = useState<randomUserProps[]>([]);
+
+  useEffect(() => {
+    const sugestions = localStorage.getItem("sugestions");
+    if (sugestions) {
+      setSugestions(JSON.parse(localStorage.getItem("sugestions") as string));
+    }
+    const getUser = async () => {
+      await axios
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}`)
+        .then((res) => {
+          setRandomUser(res.data.results[0]);
+          setLoading(false);
+        })
+        .catch((err) => console.log(err));
+    };
+    getUser();
+  }, []);
 
   useEffect(() => {
     const userLogged = localStorage.getItem("userInfo");
@@ -30,6 +48,10 @@ export default function Home() {
 
   const tryNextHandler = async () => {
     setLoading(true);
+    if (!following) {
+      setSugestions([randomUser as randomUserProps, ...sugestions]);
+      localStorage.setItem("sugestions", JSON.stringify(sugestions));
+    }
     await axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}`)
       .then((res) => {
@@ -82,6 +104,19 @@ export default function Home() {
             email={`${randomUser?.email}`}
             phone1={`${randomUser?.phone}`}
           />
+        </div>
+        <div className="w-[80%] flex flex-col gap-3 py-4">
+          <p className="text-2xl">Sugestions 4 you:</p>
+          <div className="grid grid-cols-5 w-full gap-2 grid-rows-1 overflow-hidden">
+            {sugestions.slice(0, 5).map((sugestion, index) => (
+              <SuggestionsCard
+                key={index}
+                sugestion={sugestion}
+                sugestionsSaved={sugestions}
+                setSugestions={setSugestions}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
