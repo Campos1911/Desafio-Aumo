@@ -11,6 +11,7 @@ const UserCard = ({
   setFollowing,
   userEmail,
   tryNextHandler,
+  visible,
 }: UserCardProps) => {
   const { state, setState } = useStateContext();
   const followHandler = () => {
@@ -52,6 +53,8 @@ const UserCard = ({
               onClick={followHandler}
               className={`${
                 following === true ? "bg-gray-400" : "bg-blue-500"
+              } ${
+                visible === false ? "hidden" : ""
               } text-white p-2 rounded-sm w-[50%] hover:bg-blue-800 hover:shadow-md duration-200`}
             >
               {following ? "Following" : "Follow"}
