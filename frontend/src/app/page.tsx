@@ -10,6 +10,7 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(true);
   const [following, setFollowing] = useState<boolean>(false);
   const [randomUser, setRandomUser] = useState<randomUserProps>();
+  const [sugestions, setSugestions] = useState<randomUserProps[]>([]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -26,6 +27,9 @@ export default function Home() {
 
   const tryNextHandler = async () => {
     setLoading(true);
+    if (!following) {
+      setSugestions([...sugestions, randomUser as randomUserProps]);
+    }
     await axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}`)
       .then((res) => {
@@ -52,6 +56,7 @@ export default function Home() {
     <div className="pt-16">
       <div className="flex text-white justify-center p-5 w-full bg-purple-800 h-36">
         <p className="md:text-3xl text-2xl">Find new users like you</p>
+        <button onClick={() => console.log(sugestions)}>teste</button>
       </div>
       <div className="w-full flex flex-col gap-2 items-center justify-center absolute translate-y-[-70px] xl:pb-0 pb-10">
         <UserCard
